@@ -1,25 +1,29 @@
 from ipware import get_client_ip
 from ..models import Device, Sensor
 
+class DeviceUtils:
+    pass
+
 # Device
-def get_device_or_none_by_ip(ip_address):
-    try: return Device.objects.get(ip_address=ip_address)
-    except: return None
-def get_device_or_none_by_request(request):
+def get_device_by_request(request):
     client_ip, is_routable = get_client_ip(request)
-    return get_device_or_none_by_ip(client_ip)
+    try: return Device.objects.get(ip_address=client_ip)
+    except: return None
+def set_device_by_request(request):
+    data = request.data
+    device = get_device_by_request(request)
+    if device:
+        data.update({'device': device.pk})
+    return data
 
 # Sensor
-def get_sensor_or_none_by_code(code):
+def get_sensor_by_request(request):
+    code = request.data['sensor']
     try: return Sensor.objects.get(code=code)
     except: return None
-
-# Request
-def get_and_update_request_data(request):
+def set_sensor_by_request(request):
     data = request.data
-    device = get_device_or_none_by_request(request)
-    sensor = get_device_or_none_by_request(request)
-    if device and sensor:
-        data.update({'device': device.pk})
+    sensor = get_sensor_by_request(request)
+    if sensor:
         data.update({'sensor': sensor.pk})
     return data
