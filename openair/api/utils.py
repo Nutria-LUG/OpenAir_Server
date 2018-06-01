@@ -20,7 +20,6 @@ def set_device_to_data(data, request):
     device = get_device_by_request(request)
     if device:
         for item in data:
-            print(item)
             item.update({'device': device.pk})
     return data
 
