@@ -3,16 +3,16 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .permissions import DevicePermission
 from .serializers import SurveySerializer, ErrorSerializer
-from .utils import set_device_by_request, set_sensor_by_request
+from .utils import get_request_data, set_device_to_data, set_sensor_to_data
 from ..models import Survey, Error
 
 @api_view(['POST'])
 @permission_classes([DevicePermission])
 def survey(request):
-    data = request.data
-    data = set_device_by_request(request)
-    data = set_sensor_by_request(request)
-    serializer = SurveySerializer(data=data)
+    data = get_request_data(request)
+    data = set_device_to_data(data, request)
+    data = set_sensor_to_data(data)
+    serializer = SurveySerializer(data=data, many=True)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -21,9 +21,9 @@ def survey(request):
 @api_view(['POST'])
 @permission_classes([DevicePermission])
 def error(request):
-    data = request.data
-    data = set_device_by_request(request)
-    serializer = ErrorSerializer(data=data)
+    data = get_request_data(request)
+    data = set_device_to_data(data, request)
+    serializer = ErrorSerializer(data=data, many=True)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)

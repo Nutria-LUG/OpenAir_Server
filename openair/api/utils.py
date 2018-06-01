@@ -4,26 +4,32 @@ from ..models import Device, Sensor
 class DeviceUtils:
     pass
 
+# Common
+def get_request_data(request):
+    data = request.data
+    if not isinstance(data, list):
+        return [data]
+    return data
+
 # Device
 def get_device_by_request(request):
     client_ip, is_routable = get_client_ip(request)
     try: return Device.objects.get(ip_address=client_ip)
     except: return None
-def set_device_by_request(request):
-    data = request.data
+def set_device_to_data(data, request):
     device = get_device_by_request(request)
     if device:
-        data.update({'device': device.pk})
+        for item in data:
+            print(item)
+            item.update({'device': device.pk})
     return data
 
 # Sensor
-def get_sensor_by_request(request):
-    code = request.data['sensor']
-    try: return Sensor.objects.get(code=code)
-    except: return None
-def set_sensor_by_request(request):
-    data = request.data
-    sensor = get_sensor_by_request(request)
-    if sensor:
-        data.update({'sensor': sensor.pk})
+def set_sensor_to_data(data):
+    for item in data:
+        try:
+            code = item['code']
+            sensor = Sensor.objects.get(code=code)
+            item.update({'sensor': sensor.pk})
+        except: continue
     return data
