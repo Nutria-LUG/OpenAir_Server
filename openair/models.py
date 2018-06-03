@@ -6,16 +6,30 @@ class Device(models.Model):
     mac_address = models.CharField(max_length=17, unique=True)
     ip_address = models.CharField(max_length=15, unique=True)
     enum = models.PositiveSmallIntegerField(unique=True)
-    active = models.BooleanField()
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
+
+# class LogContext(models.Model):
+#     context = models.CharField(max_length=50)
+
+#     def __str__(self):
+#         return self.context
+
+# class Log(models.Model):
+#     inserted = models.DateTimeField(auto_now_add=True, auto_now=False)
+#     context = models.ForeignKey(LogContext, models.CASCADE)
+#     message = models.TextField(max_length=1000)
+
+#     def __str__(self):
+#         return self.message
         
 class Sensor(models.Model):
     name = models.CharField(max_length=50, unique=True)
     code = models.CharField(max_length=4, unique=True)
     enum = models.PositiveSmallIntegerField(unique=True)
-    active = models.BooleanField()
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

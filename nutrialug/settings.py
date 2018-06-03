@@ -131,3 +131,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+# OpenAir
+# http://
+
+OA_MAX_DEVICES_COUNT = 30
+OA_DEVICE_REGISTRATION = True
