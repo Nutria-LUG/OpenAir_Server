@@ -19,6 +19,7 @@ class SensorAdmin(admin.ModelAdmin):
 @admin.register(Survey)
 class SurveyAdmin(TimestampAdmin):
     list_display = ['inserted', 'converted_timestamp', 'device', 'sensor', 'value']
+    list_filter = ['inserted', 'device', 'sensor']
     
 @admin.register(Error)
 class ErrorAdmin(TimestampAdmin):

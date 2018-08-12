@@ -1,3 +1,4 @@
 django==2.0.5
 djangorestframework==3.8.2
 django-ipware==2.1.0
+django-cors-headers==2.4.0

@@ -15,10 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .import views
 
 urlpatterns = [
-    path('get_last', views.get_last),
     path('admin/', admin.site.urls),
-    path('', include('openair.urls')),
+    path('openair/', include('openair.urls')),
 ]
