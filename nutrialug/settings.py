@@ -139,7 +139,7 @@ REST_FRAMEWORK = {
 # https://github.com/OttoYiu/django-cors-headers 
 
 CORS_ORIGIN_WHITELIST = (
-    'http://79.137.82.143:3000',
+    '79.137.82.143:3000',
 )
 
 # OpenAir
